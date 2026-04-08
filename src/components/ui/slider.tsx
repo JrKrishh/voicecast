@@ -1,52 +1,102 @@
-import { Slider as SliderPrimitive } from "@base-ui/react/slider"
+"use client";
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-function Slider({
-  className,
-  defaultValue,
-  value,
-  min = 0,
-  max = 100,
-  ...props
-}: SliderPrimitive.Root.Props) {
-  const _values = Array.isArray(value)
-    ? value
-    : Array.isArray(defaultValue)
-      ? defaultValue
-      : [min, max]
-
-  return (
-    <SliderPrimitive.Root
-      className={cn("data-horizontal:w-full data-vertical:h-full", className)}
-      data-slot="slider"
-      defaultValue={defaultValue}
-      value={value}
-      min={min}
-      max={max}
-      thumbAlignment="edge"
-      {...props}
-    >
-      <SliderPrimitive.Control className="relative flex w-full touch-none items-center select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col">
-        <SliderPrimitive.Track
-          data-slot="slider-track"
-          className="relative grow overflow-hidden rounded-full bg-muted select-none data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1"
-        >
-          <SliderPrimitive.Indicator
-            data-slot="slider-range"
-            className="bg-primary select-none data-horizontal:h-full data-vertical:w-full"
-          />
-        </SliderPrimitive.Track>
-        {Array.from({ length: _values.length }, (_, index) => (
-          <SliderPrimitive.Thumb
-            data-slot="slider-thumb"
-            key={index}
-            className="relative block size-3 shrink-0 rounded-full border border-ring bg-white ring-ring/50 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:ring-3 focus-visible:ring-3 focus-visible:outline-hidden active:ring-3 disabled:pointer-events-none disabled:opacity-50"
-          />
-        ))}
-      </SliderPrimitive.Control>
-    </SliderPrimitive.Root>
-  )
+interface SliderProps {
+  value?: number[];
+  defaultValue?: number[];
+  onValueChange?: (value: number[]) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  className?: string;
+  disabled?: boolean;
 }
 
-export { Slider }
+function Slider({
+  value,
+  defaultValue,
+  onValueChange,
+  min = 0,
+  max = 100,
+  step = 1,
+  className,
+  disabled = false,
+}: SliderProps) {
+  const trackRef = React.useRef<HTMLDivElement>(null);
+  const currentValue = value?.[0] ?? defaultValue?.[0] ?? min;
+  const percent = ((currentValue - min) / (max - min)) * 100;
+
+  const handlePointerEvent = React.useCallback(
+    (clientX: number) => {
+      if (disabled || !trackRef.current) return;
+      const rect = trackRef.current.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const raw = min + ratio * (max - min);
+      const stepped = Math.round(raw / step) * step;
+      const clamped = Math.max(min, Math.min(max, stepped));
+      onValueChange?.([clamped]);
+    },
+    [disabled, min, max, step, onValueChange]
+  );
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (disabled) return;
+    e.preventDefault();
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    handlePointerEvent(e.clientX);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (disabled || !e.buttons) return;
+    handlePointerEvent(e.clientX);
+  };
+
+  return (
+    <div
+      ref={trackRef}
+      role="slider"
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={currentValue}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
+      className={cn(
+        "relative flex w-full touch-none select-none items-center h-5 cursor-pointer",
+        disabled && "opacity-50 cursor-default",
+        className
+      )}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onKeyDown={(e) => {
+        if (disabled) return;
+        let next = currentValue;
+        if (e.key === "ArrowRight" || e.key === "ArrowUp") next = Math.min(max, currentValue + step);
+        if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = Math.max(min, currentValue - step);
+        if (e.key === "Home") next = min;
+        if (e.key === "End") next = max;
+        if (next !== currentValue) {
+          e.preventDefault();
+          onValueChange?.([next]);
+        }
+      }}
+    >
+      {/* Track */}
+      <div className="relative h-1 w-full rounded-full bg-muted overflow-hidden">
+        {/* Filled range */}
+        <div
+          className="absolute h-full bg-primary rounded-full"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+      {/* Thumb */}
+      <div
+        className="absolute block size-4 -translate-x-1/2 rounded-full border-2 border-primary bg-background shadow-sm ring-ring/50 transition-shadow hover:ring-2 focus-visible:ring-2"
+        style={{ left: `${percent}%` }}
+      />
+    </div>
+  );
+}
+
+export { Slider };

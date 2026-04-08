@@ -22,7 +22,7 @@ export function AgeSlider({ value, onChange }: AgeSliderProps) {
       </div>
       <Slider
         value={[value]}
-        onValueChange={(v) => onChange(Array.isArray(v) ? v[0] : v)}
+        onValueChange={(v) => onChange(v[0])}
         min={1}
         max={100}
         step={1}
