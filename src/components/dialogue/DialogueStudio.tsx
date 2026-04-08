@@ -20,17 +20,54 @@ export function DialogueStudio() {
   const filledLines = lines.filter((l) => l.text.trim()).length;
   const hasAudio = lines.some((l) => l.audioUrl);
 
-  const handleGenerateLine = (lineId: string) => {
-    // Mock generation — in production this calls the inference server
+  const handleGenerateLine = async (lineId: string) => {
+    const line = lines.find((l) => l.id === lineId);
+    if (!line?.text.trim()) return;
+
+    const voiceProfileId = useSessionStore.getState().voiceProfileId;
+    if (!voiceProfileId) {
+      alert("Please create and save a voice in the Voice Builder first.");
+      return;
+    }
+
     setLineGenerating(lineId, true);
-    setTimeout(() => {
-      // Simulate audio generation with a placeholder
-      useSessionStore.getState().setLineAudio(
-        lineId,
-        "", // No real audio yet — will be connected to Qwen3-TTS
-        2.5 + Math.random() * 3
-      );
-    }, 1500 + Math.random() * 1000);
+
+    try {
+      const emotion = line.emotionOverride || line.detectedEmotion.emotion;
+      // Build emotion instruct from the prompt assembler
+      const { EMOTION_MODIFIERS } = await import("@/lib/prompt-assembler");
+      const emotionInstruct = emotion !== "neutral" && EMOTION_MODIFIERS[emotion]
+        ? `Deliver with ${EMOTION_MODIFIERS[emotion]}.`
+        : "";
+
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: line.text.trim(),
+          voice: voiceProfileId,
+          instruct: emotionInstruct,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.audio_base64) {
+        console.error("TTS failed:", data.error);
+        useSessionStore.getState().setLineGenerating(lineId, false);
+        return;
+      }
+
+      const audioUrl = `data:audio/wav;base64,${data.audio_base64}`;
+      // Estimate duration from base64 size (WAV 24kHz 16bit mono ≈ 48000 bytes/sec)
+      const audioBytes = (data.audio_base64.length * 3) / 4;
+      const estimatedDuration = Math.max(1, (audioBytes - 44) / 48000);
+
+      useSessionStore.getState().setLineAudio(lineId, audioUrl, estimatedDuration);
+    } catch (e) {
+      console.error("TTS error:", e);
+      useSessionStore.getState().setLineGenerating(lineId, false);
+    }
   };
 
   const handleGenerateAll = () => {
