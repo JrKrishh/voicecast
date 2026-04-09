@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
  */
 
 const FAL_KEY = process.env.FAL_KEY;
-const FAL_URL = "https://queue.fal.run/fal-ai/qwen-3-tts/text-to-speech/1.7b";
+const FAL_URL = "https://queue.fal.run/fal-ai/qwen-3-tts/voice-design/1.7b";
 
 export async function POST(req: NextRequest) {
   if (!FAL_KEY) {
