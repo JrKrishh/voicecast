@@ -26,8 +26,7 @@ export function DialogueStudio() {
     if (!line?.text.trim()) return;
 
     const voiceProfileId = useSessionStore.getState().voiceProfileId;
-    const voiceDesc = useSessionStore.getState().voiceDescription;
-    if (!voiceProfileId || !voiceDesc) {
+    if (!voiceProfileId) {
       alert("Please create and save a voice in the Voice Builder first.");
       return;
     }
@@ -35,19 +34,12 @@ export function DialogueStudio() {
     setLineGenerating(lineId, true);
 
     try {
-      const emotion = line.emotionOverride || line.detectedEmotion.emotion;
-      const { EMOTION_MODIFIERS } = await import("@/lib/prompt-assembler");
-      const emotionInstruct = emotion !== "neutral" && EMOTION_MODIFIERS[emotion]
-        ? EMOTION_MODIFIERS[emotion]
-        : "";
-
       const res = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: line.text.trim(),
-          description: voiceDesc,
-          emotion_instruct: emotionInstruct,
+          voice_id: voiceProfileId,
         }),
       });
 

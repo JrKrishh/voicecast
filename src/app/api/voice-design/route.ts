@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * POST /api/voice-design
  *
- * Creates a custom voice preview using Maya1 on RunPod.
- * Takes assembled voice description + preview text, returns audio.
+ * Step 1: Creates a custom voice via Qwen3-TTS VoiceDesign,
+ * then clones it into the Base model for consistent reuse.
+ * Returns preview audio + voice_id.
  */
 
 const RUNPOD_ENDPOINT = process.env.RUNPOD_ENDPOINT_URL;
@@ -13,7 +14,7 @@ const RUNPOD_API_KEY = process.env.RUNPOD_API_KEY;
 export async function POST(req: NextRequest) {
   if (!RUNPOD_ENDPOINT || !RUNPOD_API_KEY) {
     return NextResponse.json(
-      { error: "RunPod not configured. Set RUNPOD_ENDPOINT_URL and RUNPOD_API_KEY in .env.local" },
+      { error: "RunPod not configured. Set RUNPOD_ENDPOINT_URL and RUNPOD_API_KEY." },
       { status: 500 }
     );
   }
@@ -26,8 +27,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Submit job to RunPod
-    const runRes = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
+    const res = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${RUNPOD_API_KEY}`,
@@ -35,48 +35,34 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         input: {
-          text: preview_text || "Hello, I am the voice you designed. Listen to how I sound and decide if I match your vision.",
+          action: "design",
           description: voice_prompt,
-          temperature: 0.4,
-          top_p: 0.9,
+          text: preview_text || "Hello, I am the voice you designed. Listen to how I sound and decide if I match your vision.",
+          language: "English",
         },
       }),
     });
 
-    if (!runRes.ok) {
-      const errText = await runRes.text();
-      console.error("RunPod error:", runRes.status, errText);
-      return NextResponse.json(
-        { error: `Inference failed (${runRes.status})` },
-        { status: 502 }
-      );
+    if (!res.ok) {
+      const errText = await res.text();
+      return NextResponse.json({ error: `RunPod error (${res.status})` }, { status: 502 });
     }
 
-    const result = await runRes.json();
+    const result = await res.json();
 
     if (result.status === "FAILED" || result.output?.error) {
       return NextResponse.json(
-        { error: result.output?.error || "Generation failed" },
-        { status: 500 }
-      );
-    }
-
-    const output = result.output;
-    if (!output?.audio_base64) {
-      return NextResponse.json(
-        { error: "No audio returned from inference server" },
+        { error: result.output?.error || "Voice design failed" },
         { status: 500 }
       );
     }
 
     return NextResponse.json({
-      voice: `maya1_${Date.now()}`,
-      preview_audio: output.audio_base64,
-      duration_seconds: output.duration_seconds,
-      description: voice_prompt,
+      voice_id: result.output.voice_id,
+      preview_audio: result.output.audio_base64,
+      duration_seconds: result.output.duration_seconds,
     });
   } catch (e) {
-    console.error("Voice design error:", e);
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Unknown error" },
       { status: 500 }

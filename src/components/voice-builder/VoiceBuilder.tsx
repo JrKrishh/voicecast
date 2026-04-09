@@ -67,7 +67,7 @@ export function VoiceBuilder() {
         return;
       }
 
-      setCreatedVoice(data.voice);
+      setCreatedVoice(data.voice_id);
       setPreviewAudio(data.preview_audio);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Network error");

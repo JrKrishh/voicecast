@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * POST /api/tts
  *
- * Generates speech for a dialogue line using Maya1 on RunPod.
- * Takes text + voice description + emotion instruction.
+ * Step 2: Generates a dialogue line using the cloned voice.
+ * The voice_id comes from a previous /api/voice-design call.
+ * Same voice is used consistently across all lines.
  */
 
 const RUNPOD_ENDPOINT = process.env.RUNPOD_ENDPOINT_URL;
@@ -12,30 +13,21 @@ const RUNPOD_API_KEY = process.env.RUNPOD_API_KEY;
 
 export async function POST(req: NextRequest) {
   if (!RUNPOD_ENDPOINT || !RUNPOD_API_KEY) {
-    return NextResponse.json(
-      { error: "RunPod not configured" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "RunPod not configured" }, { status: 500 });
   }
 
   const body = await req.json();
-  const { text, description, emotion_instruct } = body;
+  const { text, voice_id } = body;
 
   if (!text?.trim()) {
     return NextResponse.json({ error: "text is required" }, { status: 400 });
   }
-  if (!description?.trim()) {
-    return NextResponse.json({ error: "description is required" }, { status: 400 });
-  }
-
-  // Build the full description with emotion
-  let fullDescription = description;
-  if (emotion_instruct?.trim()) {
-    fullDescription += `. ${emotion_instruct}`;
+  if (!voice_id?.trim()) {
+    return NextResponse.json({ error: "voice_id is required" }, { status: 400 });
   }
 
   try {
-    const runRes = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
+    const res = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${RUNPOD_API_KEY}`,
@@ -43,23 +35,19 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         input: {
+          action: "generate",
           text,
-          description: fullDescription,
-          temperature: 0.4,
-          top_p: 0.9,
+          voice_id,
+          language: "English",
         },
       }),
     });
 
-    if (!runRes.ok) {
-      const errText = await runRes.text();
-      return NextResponse.json(
-        { error: `TTS failed (${runRes.status})` },
-        { status: 502 }
-      );
+    if (!res.ok) {
+      return NextResponse.json({ error: `RunPod error (${res.status})` }, { status: 502 });
     }
 
-    const result = await runRes.json();
+    const result = await res.json();
 
     if (result.status === "FAILED" || result.output?.error) {
       return NextResponse.json(

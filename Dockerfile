@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV HF_HOME=/cache/huggingface
 
-# Install Python 3.12 (required by qwen-tts)
+# Install Python 3.12
 RUN apt-get update && apt-get install -y \
     software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa && \
@@ -19,13 +19,13 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
 
 WORKDIR /app
 
-# Install qwen-tts and dependencies
 COPY inference-server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download model weights
+# Pre-download both models + tokenizer
 RUN python -c "from huggingface_hub import snapshot_download; \
     snapshot_download('Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign', cache_dir='/cache/huggingface'); \
+    snapshot_download('Qwen/Qwen3-TTS-12Hz-1.7B-Base', cache_dir='/cache/huggingface'); \
     snapshot_download('Qwen/Qwen3-TTS-Tokenizer-12Hz', cache_dir='/cache/huggingface')"
 
 COPY inference-server/model.py .
