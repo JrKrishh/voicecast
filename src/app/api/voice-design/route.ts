@@ -3,20 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * POST /api/voice-design
  *
- * Step 1: Creates a custom voice via Qwen3-TTS VoiceDesign,
- * then clones it into the Base model for consistent reuse.
- * Returns preview audio + voice_id.
+ * Creates a custom voice preview using Qwen3-TTS VoiceDesign on fal.ai.
+ * The `prompt` field is the voice description from our prompt assembler.
  */
 
-const RUNPOD_ENDPOINT = process.env.RUNPOD_ENDPOINT_URL;
-const RUNPOD_API_KEY = process.env.RUNPOD_API_KEY;
+const FAL_KEY = process.env.FAL_KEY;
+const FAL_URL = "https://queue.fal.run/fal-ai/qwen-3-tts/text-to-speech/1.7b";
 
 export async function POST(req: NextRequest) {
-  if (!RUNPOD_ENDPOINT || !RUNPOD_API_KEY) {
-    return NextResponse.json(
-      { error: "RunPod not configured. Set RUNPOD_ENDPOINT_URL and RUNPOD_API_KEY." },
-      { status: 500 }
-    );
+  if (!FAL_KEY) {
+    return NextResponse.json({ error: "FAL_KEY not configured" }, { status: 500 });
   }
 
   const body = await req.json();
@@ -27,45 +23,56 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const res = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
+    // Call fal.ai Qwen3-TTS with voice description as prompt
+    const res = await fetch(FAL_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${RUNPOD_API_KEY}`,
+        Authorization: `Key ${FAL_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        input: {
-          action: "design",
-          description: voice_prompt,
-          text: preview_text || "Hello, I am the voice you designed. Listen to how I sound and decide if I match your vision.",
-          language: "English",
-        },
+        text: preview_text || "Hello, I am the voice you designed. Listen carefully to how I speak, the rhythm of my words, the texture of my tone.",
+        prompt: voice_prompt,
+        language: "English",
+        temperature: 0.9,
+        top_p: 1,
+        repetition_penalty: 1.05,
+        max_new_tokens: 2048,
       }),
     });
 
     if (!res.ok) {
       const errText = await res.text();
-      return NextResponse.json({ error: `RunPod error (${res.status})` }, { status: 502 });
+      console.error("fal.ai error:", res.status, errText);
+      return NextResponse.json({ error: `Voice design failed (${res.status})` }, { status: 502 });
     }
 
-    const result = await res.json();
+    const data = await res.json();
 
-    if (result.status === "FAILED" || result.output?.error) {
-      return NextResponse.json(
-        { error: result.output?.error || "Voice design failed" },
-        { status: 500 }
-      );
+    // fal.ai returns audio URL
+    const audioUrl = data.audio?.url;
+    if (!audioUrl) {
+      return NextResponse.json({ error: "No audio in response" }, { status: 500 });
     }
+
+    // Fetch audio and convert to base64
+    const audioRes = await fetch(audioUrl);
+    if (!audioRes.ok) {
+      return NextResponse.json({ error: "Failed to fetch audio" }, { status: 502 });
+    }
+
+    const audioBuffer = await audioRes.arrayBuffer();
+    const base64 = Buffer.from(audioBuffer).toString("base64");
 
     return NextResponse.json({
-      voice_id: result.output.voice_id,
-      preview_audio: result.output.audio_base64,
-      duration_seconds: result.output.duration_seconds,
+      voice_id: `qwen3_${Date.now()}`,
+      preview_audio: base64,
+      duration_seconds: data.audio?.duration || 0,
+      audio_url: audioUrl,
+      description: voice_prompt,
     });
   } catch (e) {
-    return NextResponse.json(
-      { error: e instanceof Error ? e.message : "Unknown error" },
-      { status: 500 }
-    );
+    console.error("Voice design error:", e);
+    return NextResponse.json({ error: e instanceof Error ? e.message : "Unknown error" }, { status: 500 });
   }
 }

@@ -25,8 +25,8 @@ export function DialogueStudio() {
     const line = lines.find((l) => l.id === lineId);
     if (!line?.text.trim()) return;
 
-    const voiceProfileId = useSessionStore.getState().voiceProfileId;
-    if (!voiceProfileId) {
+    const voiceDesc = useSessionStore.getState().voiceDescription;
+    if (!voiceDesc) {
       alert("Please create and save a voice in the Voice Builder first.");
       return;
     }
@@ -34,12 +34,19 @@ export function DialogueStudio() {
     setLineGenerating(lineId, true);
 
     try {
+      // Build emotion-enhanced description
+      const emotion = line.emotionOverride || line.detectedEmotion.emotion;
+      const { EMOTION_MODIFIERS } = await import("@/lib/prompt-assembler");
+      const emotionSuffix = emotion !== "neutral" && EMOTION_MODIFIERS[emotion]
+        ? `\nDeliver with ${EMOTION_MODIFIERS[emotion]}.`
+        : "";
+
       const res = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: line.text.trim(),
-          voice_id: voiceProfileId,
+          description: voiceDesc + emotionSuffix,
         }),
       });
 
@@ -51,12 +58,10 @@ export function DialogueStudio() {
         return;
       }
 
-      const audioUrl = `data:audio/wav;base64,${data.audio_base64}`;
-      // Estimate duration from base64 size (WAV 24kHz 16bit mono ≈ 48000 bytes/sec)
-      const audioBytes = (data.audio_base64.length * 3) / 4;
-      const estimatedDuration = Math.max(1, (audioBytes - 44) / 48000);
+      const audioUrl = `data:audio/mpeg;base64,${data.audio_base64}`;
+      const duration = data.duration_seconds || 3;
 
-      useSessionStore.getState().setLineAudio(lineId, audioUrl, estimatedDuration);
+      useSessionStore.getState().setLineAudio(lineId, audioUrl, duration);
     } catch (e) {
       console.error("TTS error:", e);
       useSessionStore.getState().setLineGenerating(lineId, false);

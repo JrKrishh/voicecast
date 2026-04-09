@@ -85,7 +85,7 @@ export function VoiceBuilder() {
         return;
       }
     }
-    const audio = new Audio(`data:audio/wav;base64,${previewAudio}`);
+    const audio = new Audio(`data:audio/mpeg;base64,${previewAudio}`);
     audioRef.current = audio;
     audio.onended = () => setPlaying(false);
     audio.play();
