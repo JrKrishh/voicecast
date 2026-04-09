@@ -1,24 +1,21 @@
 """
-RunPod Serverless Handler for Maya1 Voice Engine.
+RunPod Serverless Handler for Qwen3-TTS Voice Engine.
 
 Accepts:
-  - text: dialogue text (with optional emotion tags like <laugh>, <angry>)
-  - description: voice description ("Female, 30s, British accent, warm tone")
-  - temperature: generation temperature (default 0.4)
-  - top_p: nucleus sampling (default 0.9)
+  - text: dialogue text to synthesize
+  - description: voice description + delivery instructions
+    Example: "Elderly female voice, aged 68, gravelly and weathered.
+             Dark wizard archetype: cold authority, ancient resonance.
+             Deliver with sharp tense intensity, biting tone."
 
 Returns:
   - audio_base64: base64-encoded WAV audio
   - duration_seconds: audio duration
-  - sample_rate: 24000
+  - sample_rate: sample rate (typically 24000)
 """
 
 import runpod
-import base64
-import io
-import numpy as np
-import soundfile as sf
-from model import load_models, generate_speech
+from model import load_models, design_voice_to_base64
 
 
 def handler(job):
@@ -31,40 +28,21 @@ def handler(job):
     if not text:
         return {"error": "text is required"}
     if not description:
-        return {"error": "description is required"}
-
-    temperature = float(job_input.get("temperature", 0.4))
-    top_p = float(job_input.get("top_p", 0.9))
-    max_tokens = int(job_input.get("max_new_tokens", 2048))
+        return {"error": "description is required — provide a voice description"}
 
     try:
-        audio, sr = generate_speech(
+        result = design_voice_to_base64(
             text=text,
-            description=description,
-            temperature=temperature,
-            top_p=top_p,
-            max_new_tokens=max_tokens,
+            voice_description=description,
         )
-
-        # Encode as WAV base64
-        buf = io.BytesIO()
-        sf.write(buf, audio, sr, format="WAV")
-        audio_b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
-        duration = len(audio) / sr
-
-        return {
-            "audio_base64": audio_b64,
-            "duration_seconds": round(duration, 2),
-            "sample_rate": sr,
-            "format": "wav",
-        }
+        return result
 
     except Exception as e:
         return {"error": str(e)}
 
 
 # Load models at cold start
-print("[RunPod] Loading Maya1 models at startup...")
+print("[RunPod] Loading Qwen3-TTS models at startup...")
 load_models()
 print("[RunPod] Models ready. Starting handler.")
 

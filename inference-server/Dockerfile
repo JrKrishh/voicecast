@@ -17,10 +17,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download models during build for faster cold starts
+# Pre-download Qwen3-TTS models during build for faster cold starts
 RUN python -c "from huggingface_hub import snapshot_download; \
-    snapshot_download('maya-research/maya1', cache_dir='/cache/huggingface'); \
-    snapshot_download('hubertsiuzdak/snac_24khz', cache_dir='/cache/huggingface')"
+    snapshot_download('Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign', cache_dir='/cache/huggingface')"
 
 COPY model.py .
 COPY handler.py .
