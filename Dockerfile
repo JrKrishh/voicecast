@@ -1,4 +1,4 @@
-FROM runpod/pytorch:2.8.0-py3.12-cuda12.8.1-cudnn-devel-ubuntu22.04
+FROM runpod/pytorch:1.0.3-cu1290-torch290-ubuntu2204
 
 ENV PYTHONUNBUFFERED=1
 ENV HF_HOME=/cache/huggingface
