@@ -3,72 +3,77 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * POST /api/voice-design
  *
- * Creates a custom voice using Qwen3-TTS Voice Design (DashScope API).
- * Takes a voice_prompt + preview_text, returns voice name + preview audio.
+ * Creates a custom voice preview using Maya1 on RunPod.
+ * Takes assembled voice description + preview text, returns audio.
  */
 
-const DASHSCOPE_URL = "https://dashscope-intl.aliyuncs.com/api/v1/services/audio/tts/customization";
+const RUNPOD_ENDPOINT = process.env.RUNPOD_ENDPOINT_URL;
+const RUNPOD_API_KEY = process.env.RUNPOD_API_KEY;
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.DASHSCOPE_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ error: "DASHSCOPE_API_KEY not configured" }, { status: 500 });
+  if (!RUNPOD_ENDPOINT || !RUNPOD_API_KEY) {
+    return NextResponse.json(
+      { error: "RunPod not configured. Set RUNPOD_ENDPOINT_URL and RUNPOD_API_KEY in .env.local" },
+      { status: 500 }
+    );
   }
 
   const body = await req.json();
-  const { voice_prompt, preview_text, preferred_name } = body;
+  const { voice_prompt, preview_text } = body;
 
   if (!voice_prompt?.trim()) {
     return NextResponse.json({ error: "voice_prompt is required" }, { status: 400 });
   }
 
   try {
-    const response = await fetch(DASHSCOPE_URL, {
+    // Submit job to RunPod
+    const runRes = await fetch(`${RUNPOD_ENDPOINT}/runsync`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${RUNPOD_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "qwen-voice-design",
         input: {
-          action: "create",
-          target_model: "qwen3-tts-vd-2026-01-26",
-          voice_prompt: voice_prompt.slice(0, 2048),
-          preview_text: (preview_text || "Hello, I am the voice you designed. Listen to how I sound.").slice(0, 1024),
-          preferred_name: preferred_name || "voicecast",
-          language: "en",
-        },
-        parameters: {
-          sample_rate: 24000,
-          response_format: "wav",
+          text: preview_text || "Hello, I am the voice you designed. Listen to how I sound and decide if I match your vision.",
+          description: voice_prompt,
+          temperature: 0.4,
+          top_p: 0.9,
         },
       }),
     });
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("DashScope error:", response.status, errText);
+    if (!runRes.ok) {
+      const errText = await runRes.text();
+      console.error("RunPod error:", runRes.status, errText);
       return NextResponse.json(
-        { error: `Voice design failed (${response.status})`, details: errText },
-        { status: response.status }
+        { error: `Inference failed (${runRes.status})` },
+        { status: 502 }
       );
     }
 
-    const data = await response.json();
+    const result = await runRes.json();
 
-    // Extract voice name and preview audio
-    const voiceName = data.output?.voice;
-    const previewAudioBase64 = data.output?.preview_audio?.data;
+    if (result.status === "FAILED" || result.output?.error) {
+      return NextResponse.json(
+        { error: result.output?.error || "Generation failed" },
+        { status: 500 }
+      );
+    }
 
-    if (!voiceName || !previewAudioBase64) {
-      return NextResponse.json({ error: "Unexpected response format", raw: data }, { status: 500 });
+    const output = result.output;
+    if (!output?.audio_base64) {
+      return NextResponse.json(
+        { error: "No audio returned from inference server" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
-      voice: voiceName,
-      preview_audio: previewAudioBase64,
-      target_model: data.output?.target_model,
+      voice: `maya1_${Date.now()}`,
+      preview_audio: output.audio_base64,
+      duration_seconds: output.duration_seconds,
+      description: voice_prompt,
     });
   } catch (e) {
     console.error("Voice design error:", e);

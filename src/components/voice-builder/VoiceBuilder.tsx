@@ -94,7 +94,7 @@ export function VoiceBuilder() {
 
   const handleSave = () => {
     if (createdVoice) {
-      setVoiceProfile(createdVoice, name || "Unnamed Voice");
+      setVoiceProfile(createdVoice, name || "Unnamed Voice", assembledPrompt);
     }
   };
 

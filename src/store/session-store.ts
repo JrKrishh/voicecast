@@ -15,12 +15,13 @@ interface SessionState {
   // Selected voice profile
   voiceProfileId: string | null;
   voiceProfileName: string;
+  voiceDescription: string; // The assembled prompt used for TTS
 
   // Dialogue lines
   lines: DialogueLine[];
 
   // Actions
-  setVoiceProfile: (id: string, name: string) => void;
+  setVoiceProfile: (id: string, name: string, description: string) => void;
   addLine: () => void;
   removeLine: (id: string) => void;
   updateLineText: (id: string, text: string) => void;
@@ -47,9 +48,10 @@ function createLine(): DialogueLine {
 export const useSessionStore = create<SessionState>((set) => ({
   voiceProfileId: null,
   voiceProfileName: "Select a voice...",
+  voiceDescription: "",
   lines: [createLine(), createLine(), createLine()],
 
-  setVoiceProfile: (id, name) => set({ voiceProfileId: id, voiceProfileName: name }),
+  setVoiceProfile: (id, name, description) => set({ voiceProfileId: id, voiceProfileName: name, voiceDescription: description }),
 
   addLine: () => set((s) => ({ lines: [...s.lines, createLine()] })),
 

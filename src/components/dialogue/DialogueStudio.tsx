@@ -9,6 +9,7 @@ import { DialogueLine } from "./DialogueLine";
 export function DialogueStudio() {
   const {
     voiceProfileName,
+    voiceDescription,
     lines,
     addLine,
     removeLine,
@@ -25,7 +26,8 @@ export function DialogueStudio() {
     if (!line?.text.trim()) return;
 
     const voiceProfileId = useSessionStore.getState().voiceProfileId;
-    if (!voiceProfileId) {
+    const voiceDesc = useSessionStore.getState().voiceDescription;
+    if (!voiceProfileId || !voiceDesc) {
       alert("Please create and save a voice in the Voice Builder first.");
       return;
     }
@@ -34,10 +36,9 @@ export function DialogueStudio() {
 
     try {
       const emotion = line.emotionOverride || line.detectedEmotion.emotion;
-      // Build emotion instruct from the prompt assembler
       const { EMOTION_MODIFIERS } = await import("@/lib/prompt-assembler");
       const emotionInstruct = emotion !== "neutral" && EMOTION_MODIFIERS[emotion]
-        ? `Deliver with ${EMOTION_MODIFIERS[emotion]}.`
+        ? EMOTION_MODIFIERS[emotion]
         : "";
 
       const res = await fetch("/api/tts", {
@@ -45,8 +46,8 @@ export function DialogueStudio() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: line.text.trim(),
-          voice: voiceProfileId,
-          instruct: emotionInstruct,
+          description: voiceDesc,
+          emotion_instruct: emotionInstruct,
         }),
       });
 
