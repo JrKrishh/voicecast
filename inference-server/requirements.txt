@@ -1,9 +1,4 @@
-torch>=2.1.0
-transformers>=4.40.0
-qwen-tts>=0.2.0
+qwen-tts
 soundfile
 numpy
-fastapi
-uvicorn[standard]
 runpod
-huggingface_hub

@@ -1,79 +1,55 @@
 """
-Qwen3-TTS Voice Engine — Model loader and inference
-
-Two modes:
-1. Voice Design: create a new voice from a text description
-2. TTS: generate speech using a designed voice + emotion instructions
+Qwen3-TTS Voice Engine — using official qwen-tts package
 """
 
 import io
 import base64
-import numpy as np
+import torch
 import soundfile as sf
 
-_voice_design_model = None
-_tts_model = None
+_model = None
 
 
 def load_models():
-    """Load Qwen3-TTS models. Called once at startup."""
-    global _voice_design_model, _tts_model
-
-    if _voice_design_model is not None:
+    global _model
+    if _model is not None:
         return
 
-    print("[Qwen3-TTS] Loading VoiceDesign model (1.7B)...")
-    from qwen_tts import QwenTTS
+    from qwen_tts import Qwen3TTSModel
 
-    # Voice Design model — creates new voices from descriptions
-    _voice_design_model = QwenTTS(
-        model="Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
-        device="cuda",
+    print("[Qwen3-TTS] Loading VoiceDesign model...")
+    _model = Qwen3TTSModel.from_pretrained(
+        "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+        device_map="cuda:0",
+        dtype=torch.bfloat16,
     )
-    print("[Qwen3-TTS] VoiceDesign model loaded.")
-
-    # Base model — for voice cloning (optional, loaded on demand)
-    # _tts_model = QwenTTS(model="Qwen/Qwen3-TTS-12Hz-1.7B-Base", device="cuda")
-
-    print("[Qwen3-TTS] All models ready.")
+    print("[Qwen3-TTS] Model ready.")
 
 
-def design_voice(
-    text: str,
-    voice_description: str,
-) -> tuple[np.ndarray, int]:
+def generate_voice_design(text: str, instruct: str, language: str = "English") -> dict:
     """
     Generate speech with a custom voice designed from description.
 
-    The VoiceDesign model takes:
-    - text: what to say
-    - instruct: voice description + delivery instructions
+    Args:
+        text: What to say
+        instruct: Voice description + delivery instructions
+        language: "English", "Chinese", etc.
 
-    Returns (audio_samples, sample_rate)
+    Returns dict with audio_base64, duration_seconds, sample_rate
     """
-    if _voice_design_model is None:
+    if _model is None:
         load_models()
 
-    # Qwen3-TTS VoiceDesign uses the instruct field for voice description
-    audio = _voice_design_model.synthesize(
+    wavs, sr = _model.generate_voice_design(
         text=text,
-        instruct=voice_description,
+        language=language,
+        instruct=instruct,
     )
 
-    return audio["samples"], audio["sample_rate"]
-
-
-def design_voice_to_base64(
-    text: str,
-    voice_description: str,
-) -> dict:
-    """Generate speech and return as base64 WAV."""
-    samples, sr = design_voice(text, voice_description)
-
     buf = io.BytesIO()
-    sf.write(buf, samples, sr, format="WAV")
+    sf.write(buf, wavs[0], sr, format="WAV")
     audio_b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
-    duration = len(samples) / sr
+    duration = len(wavs[0]) / sr
 
     return {
         "audio_base64": audio_b64,
