@@ -1,0 +1,435 @@
+2026-04-09  13:26:53.261 | error | 3gh5nsh7124c0r | worker exited with exit code 1
+2026-04-09  13:26:36.916 | error | 3gh5nsh7124c0r | worker exited with exit code 1
+2026-04-09  13:26:20.526 | error | 3gh5nsh7124c0r | worker exited with exit code 1
+2026-04-09  13:26:04.224 | error | 3gh5nsh7124c0r | worker exited with exit code 1
+2026-04-09  13:25:47.901 | error | 3gh5nsh7124c0r | worker exited with exit code 1
+2026-04-09  13:21:45.892 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:21:28.399 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt | RuntimeError: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |     torch._C._cuda_init()\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |     _lazy_init()\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:21:19.658 | info | 1qm5dyvtcxxqzt |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     return func(*args, **kwargs)\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     model = super().from_pretrained(\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     return model_class.from_pretrained(\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     _model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/app/model.py", line 21, in load_models\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |     load_models()\n
+2026-04-09  13:21:19.657 | info | 1qm5dyvtcxxqzt |   File "/app/handler.py", line 42, in <module>\n
+2026-04-09  13:21:18.870 | info | 1qm5dyvtcxxqzt | Traceback (most recent call last):\n
+2026-04-09  13:21:18.870 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:51:18,672 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:21:18.870 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:51:18,672 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:21:18.870 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:51:18,672 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:18.870 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:483  2026-04-09 07:51:18,672 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:18.671 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:51:18,671 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | [Qwen3-TTS] Loading VoiceDesign model...\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |     \n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |     path variables.\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |     If you do not have SoX, proceed here:\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | __init__.py         :10   2026-04-09 07:51:18,106 SoX could not be found!\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | /bin/sh: 1: sox: not found\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt |  \n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | ********\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:21:18.501 | info | 1qm5dyvtcxxqzt | ********\n
+2026-04-09  13:21:18.102 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.257 | info | 1qm5dyvtcxxqzt | [RunPod] Loading Qwen3-TTS...\n
+2026-04-09  13:21:14.257 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.257 | info | 1qm5dyvtcxxqzt | A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | By pulling and using the container, you accept the terms and conditions of this license:\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | This container image and its contents are governed by the NVIDIA Deep Learning Container License.\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | CUDA Version 12.1.1\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | ==========\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | == CUDA ==\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | ==========\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | RuntimeError: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     torch._C._cuda_init()\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     _lazy_init()\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     return func(*args, **kwargs)\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     model = super().from_pretrained(\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     return model_class.from_pretrained(\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     _model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/app/model.py", line 21, in load_models\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |     load_models()\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt |   File "/app/handler.py", line 42, in <module>\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | Traceback (most recent call last):\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:51:02,280 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:51:02,279 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:51:02,278 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:483  2026-04-09 07:51:02,278 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:14.256 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:51:02,276 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:21:09.775 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:20:49.932 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:20:32.669 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:20:15.382 | error | 1qm5dyvtcxxqzt | worker exited with exit code 1
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt | RuntimeError: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |     torch._C._cuda_init()\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |     _lazy_init()\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.024 | info | 1qm5dyvtcxxqzt |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     return func(*args, **kwargs)\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     model = super().from_pretrained(\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     return model_class.from_pretrained(\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     _model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/app/model.py", line 21, in load_models\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |     load_models()\n
+2026-04-09  13:20:12.023 | info | 1qm5dyvtcxxqzt |   File "/app/handler.py", line 42, in <module>\n
+2026-04-09  13:20:10.259 | info | 1qm5dyvtcxxqzt | Traceback (most recent call last):\n
+2026-04-09  13:20:10.259 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:49:50,218 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:20:10.259 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:435  2026-04-09 07:49:50,217 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:20:10.259 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:49:50,216 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:20:10.259 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:483  2026-04-09 07:49:50,216 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | configuration_qwen3_tts.py:486  2026-04-09 07:49:50,214 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | [Qwen3-TTS] Loading VoiceDesign model...\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |     \n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |     path variables.\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |     If you do not have SoX, proceed here:\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | __init__.py         :10   2026-04-09 07:49:49,651 SoX could not be found!\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | /bin/sh: 1: sox: not found\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt |  \n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | ********\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | ********\n
+2026-04-09  13:20:10.258 | info | 1qm5dyvtcxxqzt | \n
+2026-04-09  13:17:39.599 | error | 1ln7p79kx589cj | worker exited with exit code 1
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj | RuntimeError: The NVIDIA driver on your system is too old (found version 12040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     torch._C._cuda_init()\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     _lazy_init()\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     return func(*args, **kwargs)\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     model = super().from_pretrained(\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     return model_class.from_pretrained(\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     _design_model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/app/model.py", line 28, in load_models\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |     load_models()\n
+2026-04-09  13:17:34.717 | info | 1ln7p79kx589cj |   File "/app/handler.py", line 60, in <module>\n
+2026-04-09  13:17:33.914 | info | 1ln7p79kx589cj | Traceback (most recent call last):\n
+2026-04-09  13:17:33.914 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:435  2026-04-09 07:47:33,640 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:17:33.914 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:435  2026-04-09 07:47:33,640 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:17:33.914 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:486  2026-04-09 07:47:33,640 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:33.914 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:483  2026-04-09 07:47:33,640 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:33.639 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:486  2026-04-09 07:47:33,639 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:33.639 | info | 1ln7p79kx589cj | [Qwen3-TTS] Loading VoiceDesign model (1.7B)...\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | [RunPod] Loading Qwen3-TTS dual-model pipeline...\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |     \n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |     path variables.\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |     If you do not have SoX, proceed here:\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | __init__.py         :10   2026-04-09 07:47:33,179 SoX could not be found!\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | /bin/sh: 1: sox: not found\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj |  \n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | ********\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:17:33.528 | info | 1ln7p79kx589cj | ********\n
+2026-04-09  13:17:33.177 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.177 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | By pulling and using the container, you accept the terms and conditions of this license:\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | This container image and its contents are governed by the NVIDIA Deep Learning Container License.\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | CUDA Version 12.1.1\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | ==========\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | == CUDA ==\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | ==========\n
+2026-04-09  13:17:33.176 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj | RuntimeError: The NVIDIA driver on your system is too old (found version 12040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     torch._C._cuda_init()\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     _lazy_init()\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     return func(*args, **kwargs)\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     model = super().from_pretrained(\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     return model_class.from_pretrained(\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     _design_model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/app/model.py", line 28, in load_models\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |     load_models()\n
+2026-04-09  13:17:15.957 | info | 1ln7p79kx589cj |   File "/app/handler.py", line 60, in <module>\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | Traceback (most recent call last):\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:435  2026-04-09 07:46:50,188 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:435  2026-04-09 07:46:50,188 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:486  2026-04-09 07:46:50,188 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:483  2026-04-09 07:46:50,187 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | configuration_qwen3_tts.py:486  2026-04-09 07:46:50,187 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | [Qwen3-TTS] Loading VoiceDesign model (1.7B)...\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | [RunPod] Loading Qwen3-TTS dual-model pipeline...\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj |     \n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj |     path variables.\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj |     If you do not have SoX, proceed here:\n
+2026-04-09  13:17:14.986 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | __init__.py         :10   2026-04-09 07:46:49,784 SoX could not be found!\n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | /bin/sh: 1: sox: not found\n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj |  \n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | ********\n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | ********\n
+2026-04-09  13:17:14.985 | info | 1ln7p79kx589cj | \n
+2026-04-09  13:15:55.133 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:15:38.641 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:15:22.102 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:15:05.583 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:14:49.018 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:14:31.866 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:14:15.273 | error | 23gyehalkbbked | worker exited with exit code 1
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked | RuntimeError: The NVIDIA driver on your system is too old (found version 12040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     torch._C._cuda_init()\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     _lazy_init()\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     return func(*args, **kwargs)\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     model = super().from_pretrained(\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     return model_class.from_pretrained(\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     _model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/app/model.py", line 21, in load_models\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |     load_models()\n
+2026-04-09  13:14:01.229 | info | 23gyehalkbbked |   File "/app/handler.py", line 42, in <module>\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | Traceback (most recent call last):\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | configuration_qwen3_tts.py:435  2026-04-09 07:43:34,078 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | configuration_qwen3_tts.py:435  2026-04-09 07:43:34,077 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | configuration_qwen3_tts.py:486  2026-04-09 07:43:34,077 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | configuration_qwen3_tts.py:483  2026-04-09 07:43:34,077 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | configuration_qwen3_tts.py:486  2026-04-09 07:43:34,076 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | [Qwen3-TTS] Loading VoiceDesign model...\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |     \n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |     path variables.\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | \n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |     If you do not have SoX, proceed here:\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | \n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | __init__.py         :10   2026-04-09 07:43:33,551 SoX could not be found!\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | /bin/sh: 1: sox: not found\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked |  \n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | ********\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | ********\n
+2026-04-09  13:14:00.215 | info | 23gyehalkbbked | \n
+2026-04-09  13:13:27.590 | error | nhyyv36kxv6tud | worker exited with exit code 1
+2026-04-09  13:13:10.849 | error | nhyyv36kxv6tud | worker exited with exit code 1
+2026-04-09  13:12:54.076 | error | nhyyv36kxv6tud | worker exited with exit code 1
+2026-04-09  13:12:37.233 | error | nhyyv36kxv6tud | worker exited with exit code 1
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud | RuntimeError: The NVIDIA driver on your system is too old (found version 12040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     torch._C._cuda_init()\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 478, in _lazy_init\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     _lazy_init()\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 555, in cudart\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |            ^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     return torch.cuda.cudart().cudaMemGetInfo(device)\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 842, in mem_get_info\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     device_memory = torch_accelerator_module.mem_get_info(index)[0]\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 6090, in caching_allocator_warmup\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     caching_allocator_warmup(model, expanded_device_map, hf_quantizer)\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5432, in _load_pretrained_model\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     ) = cls._load_pretrained_model(\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5048, in from_pretrained\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |            ^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     return func(*args, **kwargs)\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 277, in _wrapper\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |             ^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     model = super().from_pretrained(\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/core/models/modeling_qwen3_tts.py", line 1876, in from_pretrained\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     return model_class.from_pretrained(\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 604, in from_pretrained\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     model = AutoModel.from_pretrained(pretrained_model_name_or_path, **kwargs)\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/usr/local/lib/python3.12/dist-packages/qwen_tts/inference/qwen3_tts_model.py", line 112, in from_pretrained\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     _model = Qwen3TTSModel.from_pretrained(\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |   File "/app/model.py", line 21, in load_models\n
+2026-04-09  13:12:06.358 | info | nhyyv36kxv6tud |     load_models()\n
+2026-04-09  13:12:06.357 | info | nhyyv36kxv6tud |   File "/app/handler.py", line 42, in <module>\n
+2026-04-09  13:12:05.372 | info | nhyyv36kxv6tud | Traceback (most recent call last):\n
+2026-04-09  13:12:05.372 | info | nhyyv36kxv6tud | configuration_qwen3_tts.py:435  2026-04-09 07:41:19,775 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:12:05.372 | info | nhyyv36kxv6tud | configuration_qwen3_tts.py:435  2026-04-09 07:41:19,775 code_predictor_config is None. Initializing code_predictor model with default values\n
+2026-04-09  13:12:05.372 | info | nhyyv36kxv6tud | configuration_qwen3_tts.py:486  2026-04-09 07:41:19,775 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:12:05.372 | info | nhyyv36kxv6tud | configuration_qwen3_tts.py:483  2026-04-09 07:41:19,774 talker_config is None. Initializing talker model with default values\n
+2026-04-09  13:11:19.774 | info | nhyyv36kxv6tud | configuration_qwen3_tts.py:486  2026-04-09 07:41:19,773 speaker_encoder_config is None. Initializing talker model with default values\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | [Qwen3-TTS] Loading VoiceDesign model...\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |     \n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |     path variables.\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |     If you do (or think that you should) have SoX, double-check your\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |      - - - http://sox.sourceforge.net/ - - -\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |     If you do not have SoX, proceed here:\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | __init__.py         :10   2026-04-09 07:41:19,227 SoX could not be found!\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | /bin/sh: 1: sox: not found\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud |  \n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | ********\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.\n
+2026-04-09  13:11:19.664 | info | nhyyv36kxv6tud | ********\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | [RunPod] Loading Qwen3-TTS...\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | By pulling and using the container, you accept the terms and conditions of this license:\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | This container image and its contents are governed by the NVIDIA Deep Learning Container License.\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | CUDA Version 12.1.1\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | ==========\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | == CUDA ==\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | ==========\n
+2026-04-09  13:11:19.225 | info | nhyyv36kxv6tud | \n
